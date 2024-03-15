@@ -47,14 +47,14 @@ function App() {
   }, []);
   console.log(isAuthenticated);
   return (
-    <div className="App flex flex-col min-h-screen">
+    <div className="App flex flex-col min-h-screen  ">
       <Navbar
         isAuthenticated={isAuthenticated}
         setIsAuthenticated={setIsAuthenticated}
         userAuthenticated={userAuthenticated}
       />
 
-      <div className="flex-grow bg-gray-100">
+      {/* <div className="flex-grow bg-gray-100 "> */}
         <Routes>
           <Route
             path="/login"
@@ -71,7 +71,7 @@ function App() {
           />
         </Routes>
       </div>
-    </div>
+    // </div>
   );
 }
 

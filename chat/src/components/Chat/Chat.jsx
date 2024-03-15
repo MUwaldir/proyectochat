@@ -260,123 +260,118 @@ function Chat({
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit}
-        className="flex justify-between items-center  bg-gray-200"
-      >
-        <div className="flex-grow flex justify-start items-center z-50 bg-gray-300">
-          {isAuthenticated && selectedRecipientId && (
-            <>
-              {/* Botón de flecha hacia atrás */}
-              {searchUsername && selectedRecipientId && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearchUsername("");
-                    setSelectedRecipientId(null);
-                  }}
-                  className="bg-gray-500 text-white px-4 py-2 rounded-lg"
-                >
-                  ←
-                </button>
-              )}
-              <img
-                src="https://randomuser.me/api/portraits/women/2.jpg"
-                alt=""
-                className="rounded-full w-12 h-12  mx-4 shadow-md"
-              />
-              <p>
-                Chat con{" "}
-                <span className="text-md text-black h-full bg-white rounded-md px-2 py-1 shadow-md font-bold">
-                  {searchUsername}
-                </span>
-              </p>
-            </>
-          )}
-        </div>
-      </form>
-
       {isAuthenticated ? (
         selectedRecipientId ? (
           <>
-            <div className="flex flex-col w-full absolute  bottom-0">
-              <div className=" bg-gray-100  h-screen  overflow-y-auto ">
-                {messages &&
-                  messages.map((message, index) => (
-                    <div
-                      key={index}
-                      className={`flex w-full p-2 my-1   justify-${
-                        message.username === userAuthenticated ? "end" : "start"
-                      } `}
-                      //   style={{
-                      //     width: "80%", // Ancho del 80% en pantallas pequeñas
-                      //     maxWidth: "50%", // Ancho máximo del 50% en pantallas grandes
-                      //     margin: "0 auto", // Centra el mensaje horizontalmente
-                      //   }}
-                    >
-                      <div className={`w-full   `}>
+          <div className="flex-grow flex flex-col"> 
+            <form
+              onSubmit={handleSubmit}
+              className="flex  h-10 justify-between items-center  bg-gray-200"
+            >
+              <div className="flex flex-grow justify-start items-center z-50 bg-gray-300">
+                {isAuthenticated && selectedRecipientId && (
+                  <>
+                    {/* Botón de flecha hacia atrás */}
+                    {searchUsername && selectedRecipientId && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSearchUsername("");
+                          setSelectedRecipientId(null);
+                        }}
+                        className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+                      >
+                        ←
+                      </button>
+                    )}
+                    <img
+                      src="https://randomuser.me/api/portraits/lego/2.jpg"
+                      alt=""
+                      className="rounded-full w-12 h-12  mx-4 shadow-md"
+                    />
+
+                    <p>
+                      Chat con{" "}
+                      <span className="text-md text-black h-full bg-white rounded-md px-2 py-1 shadow-md font-bold">
+                        {searchUsername}
+                      </span>
+                    </p>
+                  </>
+                )}
+              </div>
+            </form>
+
+            <div className=" h-96 flex-grow bg-gray-100 overflow-y-auto ">
+              {messages &&
+                messages.map((message, index) => (
+                  <div
+                    key={index}
+                    className={`flex w-full p-2 my-1   justify-${
+                      message.username === userAuthenticated ? "end" : "start"
+                    } `}
+                  >
+                    <div className={`w-full   `}>
+                      <div
+                        className={` flex ${
+                          message.username === userAuthenticated
+                            ? "justify-end ml-10"
+                            : "justify-start mr-10"
+                        }  `}
+                      >
                         <div
-                          className={` flex ${
+                          className={`${
                             message.username === userAuthenticated
-                              ? "justify-end ml-10"
-                              : "justify-start mr-10"
-                          }  `}
+                              ? "bg-blue-500"
+                              : "bg-gray-700"
+                          }  text-white rounded-lg p-2 h-auto max-w-96`}
                         >
-                         
-                          <div
-                            className={`${
-                              message.username === userAuthenticated
-                                ? "bg-blue-500"
-                                : "bg-gray-700"
-                            }  text-white rounded-lg p-2 h-auto max-w-96`}
-                          >
-                             <div className="text-black bg-slate-400 rounded px-2 ">
+                          <div className="text-black bg-slate-400 rounded px-2 ">
                             {message.username}
                           </div>
-                            {message.content}
-                          </div>
+                          {message.content}
                         </div>
                       </div>
                     </div>
-                  ))}
-                {/* Referencia para hacer scroll al final */}
-                <div ref={messagesEndRef} />
-              </div>
-              <form
-                onSubmit={handleSubmit}
-                className="flex justify-between items-center p-2 bg-gray-200"
+                  </div>
+                ))}
+              {/* Referencia para hacer scroll al final */}
+              <div ref={messagesEndRef} />
+            </div>
+            <form
+              onSubmit={handleSubmit}
+              className="flex justify-between items-center p-2 h-15 bg-gray-200"
+            >
+              <input
+                type="text"
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                placeholder="Type a message..."
+                className="flex-grow px-4 py-2 mr-2 border border-gray-400 rounded-lg focus:outline-none focus:border-blue-500"
+              />
+              <button
+                type="button"
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
               >
-                <input
-                  type="text"
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  placeholder="Type a message..."
-                  className="flex-grow px-4 py-2 mr-2 border border-gray-400 rounded-lg focus:outline-none focus:border-blue-500"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-                >
-                  🙂
-                </button>
-                <button
-                  type="submit"
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-                >
-                  Send
-                </button>
-              </form>
-              {showEmojiPicker && (
-                <div className="absolute bottom-20 right-2 z-10">
-                  <EmojiPicker onEmojiClick={handleEmojiSelect} />
-                </div>
-              )}
+                🙂
+              </button>
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+              >
+                Send
+              </button>
+            </form>
+            {showEmojiPicker && (
+              <div className="absolute bottom-20 right-2 z-10">
+                <EmojiPicker onEmojiClick={handleEmojiSelect} />
+              </div>
+            )}
             </div>
           </>
         ) : (
-          <>
-            <div className="w-full flex justify-center pt-2 ">
+          <div className="flex-grow flex flex-col">
+            <div className="w-full  flex justify-center pt-2 ">
               <input
                 type="text"
                 value={searchUsername}
@@ -395,13 +390,13 @@ function Chat({
             </div>
             {!selectedRecipientId && (
               <div className="flex flex-col mt-2">
-                <h3 className="text-lg font-bold">Found Users</h3>
+                <h3 className="text-lg font-bold">Usuarios</h3>
                 {foundUsers.length > 0 ? (
                   <ul className="mt-2">
                     {foundUsers.map((user) => (
                       <li
                         key={user._id}
-                        className="border-b px-2 mb-1 cursor-pointer h-10 flex bg-slate-200"
+                        className="border-b px-2 mb-1 cursor-pointer h-10 flex bg-slate-200 hover:bg-slate-600 hover:text-white"
                         onClick={() => {
                           setSelectedRecipientId(user._id);
                           handleUserSelection(user._id);
@@ -409,26 +404,28 @@ function Chat({
                         }}
                       >
                         <img
-                          src="https://picsum.photos/200/300"
+                          src="https://randomuser.me/api/portraits/lego/2.jpg"
                           alt=""
-                          className=" w-10 rounded-full"
+                          className="rounded-full w-8 h-8  mx-4 shadow-md"
                         />
-                        <span className="text-lg mx-2">{user.username}</span>
-                        <span className="text-lg">{user.email}</span>
+                        <span className="text-lg mx-2 font-semibold">
+                          {user.username}
+                        </span>
+                        {/* <span className="text-sm">{user.email}</span> */}
                         {/* Agrega más detalles del usuario aquí si es necesario */}
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="mt-2 text-gray-500">No users found</p>
+                  <p className="mt-2 text-gray-500">Usuarios no encontrados</p>
                 )}
               </div>
             )}
-          </>
+          </div>
         )
       ) : (
         <>
-          <div className="flex  flex-col items-center justify-center absolute w-full bottom-1.5 ">
+          <div className="flex-grow  flex flex-col items-center justify-center absolute w-full bottom-1.5 ">
             <Home />
           </div>
         </>
@@ -438,3 +435,15 @@ function Chat({
 }
 
 export default Chat;
+
+{/* <div className="min-h-screen">
+  <div className="navabr"></div>
+  <div className="flex-grow">
+    <div className="superior h-10"></div>
+    <div className="center"></div>
+    <div className="inferior h-10"></div>
+  </div>
+  <div className="footer">
+
+  </div>
+</div> */}
