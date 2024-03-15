@@ -314,12 +314,12 @@ function Chat({
                       //     margin: "0 auto", // Centra el mensaje horizontalmente
                       //   }}
                     >
-                      <div className={`w-full  flex   `}>
+                      <div className={`w-full   `}>
                         <div
-                          className={`w-full  flex justify-${
+                          className={` flex ${
                             message.username === userAuthenticated
-                              ? "end ml-10"
-                              : "start mr-10"
+                              ? "justify-end ml-10"
+                              : "justify-start mr-10"
                           }  `}
                         >
                          
