@@ -63,8 +63,8 @@ function Chat({
 
   useEffect(() => {
     if (!token) {
-        setIsAuthenticated(false);
-        return
+      setIsAuthenticated(false);
+      return;
     }
 
     WebSocket.connect();
@@ -116,8 +116,8 @@ function Chat({
 
   const authenticateUser = (token) => {
     if (!token) {
-        setIsAuthenticated(false);
-        return;
+      setIsAuthenticated(false);
+      return;
     }
     WebSocket.emit("authenticate", token);
   };
@@ -126,7 +126,7 @@ function Chat({
 
   const handleUserSelection = async (selectedUserId) => {
     authenticateUser(token);
-   
+
     // Verificar si ya existe una conversación con el usuario seleccionado
     const existingConversation = await findExistingConversation(selectedUserId);
 
@@ -308,26 +308,35 @@ function Chat({
                       className={`flex w-full p-2 my-1   justify-${
                         message.username === userAuthenticated ? "end" : "start"
                       } `}
-                    //   style={{
-                    //     width: "80%", // Ancho del 80% en pantallas pequeñas
-                    //     maxWidth: "50%", // Ancho máximo del 50% en pantallas grandes
-                    //     margin: "0 auto", // Centra el mensaje horizontalmente
-                    //   }}
+                      //   style={{
+                      //     width: "80%", // Ancho del 80% en pantallas pequeñas
+                      //     maxWidth: "50%", // Ancho máximo del 50% en pantallas grandes
+                      //     margin: "0 auto", // Centra el mensaje horizontalmente
+                      //   }}
                     >
-                      <div className={`w-auto  flex flex-col justify-${
-                        message.username === userAuthenticated ? "end ml-10" : "start mr-10"
-                      } ` } >
-
-                        <div className="text-black bg-slate-400 rounded px-2 ">
-                          {message.username}
-                        </div>
-                        <div className={`${
-                        message.username === userAuthenticated ? "bg-blue-500" : "bg-gray-700"
-                      }  text-white rounded-lg p-2 h-auto max-w-96`}>
-                          {message.content}
+                      <div className={`w-full  flex   `}>
+                        <div
+                          className={`w-full  flex justify-${
+                            message.username === userAuthenticated
+                              ? "end ml-10"
+                              : "start mr-10"
+                          }  `}
+                        >
+                         
+                          <div
+                            className={`${
+                              message.username === userAuthenticated
+                                ? "bg-blue-500"
+                                : "bg-gray-700"
+                            }  text-white rounded-lg p-2 h-auto max-w-96`}
+                          >
+                             <div className="text-black bg-slate-400 rounded px-2 ">
+                            {message.username}
+                          </div>
+                            {message.content}
+                          </div>
                         </div>
                       </div>
-                      
                     </div>
                   ))}
                 {/* Referencia para hacer scroll al final */}
@@ -367,24 +376,23 @@ function Chat({
           </>
         ) : (
           <>
-          <div className="w-full flex justify-center pt-2 ">
-
-            <input
-              type="text"
-              value={searchUsername}
-              onChange={(e) => setSearchUsername(e.target.value)}
-              placeholder="Search for users..."
-              className=" py-2 border w-3/4 px-2 border-gray-400 rounded-lg focus:outline-none focus:border-blue-500"
-              onClick={handleInputClick}
-            />
-            <button
-              type="button"
-              onClick={handleSearchUser}
-              className="bg-blue-500 w-1/4 text-white  py-2 rounded-lg ml-2"
-            >
-              Search
-            </button>
-          </div>
+            <div className="w-full flex justify-center pt-2 ">
+              <input
+                type="text"
+                value={searchUsername}
+                onChange={(e) => setSearchUsername(e.target.value)}
+                placeholder="Search for users..."
+                className=" py-2 border w-3/4 px-2 border-gray-400 rounded-lg focus:outline-none focus:border-blue-500"
+                onClick={handleInputClick}
+              />
+              <button
+                type="button"
+                onClick={handleSearchUser}
+                className="bg-blue-500 w-1/4 text-white  py-2 rounded-lg ml-2"
+              >
+                Search
+              </button>
+            </div>
             {!selectedRecipientId && (
               <div className="flex flex-col mt-2">
                 <h3 className="text-lg font-bold">Found Users</h3>
@@ -400,7 +408,11 @@ function Chat({
                           setSearchUsername(user.username);
                         }}
                       >
-                        <img src="https://picsum.photos/200/300" alt="" className=" w-10 rounded-full" />
+                        <img
+                          src="https://picsum.photos/200/300"
+                          alt=""
+                          className=" w-10 rounded-full"
+                        />
                         <span className="text-lg mx-2">{user.username}</span>
                         <span className="text-lg">{user.email}</span>
                         {/* Agrega más detalles del usuario aquí si es necesario */}
