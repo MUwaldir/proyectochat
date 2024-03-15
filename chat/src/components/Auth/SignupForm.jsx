@@ -1,16 +1,35 @@
 import React, { useState } from 'react';
-
+const URLAPI = "http://localhost:3001"
 function SignupForm() {
-  const [name, setName] = useState('');
+  const [username, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
+    const userData = {
+        username,
+        email,
+        password
+    }
     // Aquí puedes agregar la lógica para enviar el formulario de registro al servidor
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Password:', password);
+    try {
+        const response = await fetch(`${URLAPI}/api/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        });
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error logging in user:', error);
+        return { success: false, message: 'Error logging in user' };
+      }
+    // console.log('Name:', name);
+    // console.log('Email:', email);
+    // console.log('Password:', password);
   };
 
   return (
@@ -22,8 +41,8 @@ function SignupForm() {
           <input
             type="text"
             id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
           />
         </div>
